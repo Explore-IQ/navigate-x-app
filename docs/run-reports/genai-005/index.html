@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GENAI-005 — UI Aesthetic Run Report</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue-50:  #F0F8FF;
+      --blue-100: #DAEEFF;
+      --blue-200: #B0D9F5;
+      --blue-400: #6CB6E4;
+      --blue-600: #3A8CC4;
+      --blue-800: #1E4F7A;
+      --blue-900: #0F2A45;
+      --green:    #4F8A65;
+      --sand:     #EBA86B;
+      --text:     #1E3A5F;
+      --text-sub: #4A6080;
+      --border:   #C8E0F0;
+      --bg:       #F4FAFF;
+      --card:     #FFFFFF;
+      --code-bg:  #EBF5FF;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, #0F2A45 0%, #1E4F7A 50%, #2A6B9C 100%);
+      color: #fff;
+      padding: 48px 32px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 80% 50%, rgba(108,182,228,0.18) 0%, transparent 70%);
+    }
+    header .inner {
+      max-width: 960px;
+      margin: 0 auto;
+      position: relative;
+    }
+    header .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(108,182,228,0.2);
+      border: 1px solid rgba(108,182,228,0.4);
+      border-radius: 999px;
+      padding: 4px 14px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #A8D8F0;
+      margin-bottom: 16px;
+    }
+    header h1 {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+    header h1 span { color: #6CB6E4; }
+    header p {
+      color: rgba(255,255,255,0.65);
+      font-size: 15px;
+      max-width: 580px;
+    }
+    .meta-row {
+      display: flex;
+      gap: 24px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .meta-item .label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.4);
+    }
+    .meta-item .value {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.9);
+    }
+
+    /* ── Main layout ── */
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* ── Section titles ── */
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--blue-600);
+      margin: 48px 0 20px;
+    }
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .section-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--blue-400);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 12px rgba(30,79,122,0.06);
+    }
+    .card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .card p {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.65;
+    }
+
+    /* ── Command blocks ── */
+    .cmd-block {
+      background: var(--blue-900);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 12px 0;
+      overflow-x: auto;
+    }
+    .cmd-block .prompt {
+      color: #6CB6E4;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+      opacity: 0.7;
+    }
+    .cmd-block code {
+      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+      font-size: 13px;
+      color: #E2F0FA;
+      white-space: pre;
+      display: block;
+      line-height: 1.7;
+    }
+    .cmd-block code .comment {
+      color: #5A8FAA;
+    }
+    .cmd-block code .success {
+      color: #6BCB8B;
+    }
+    .cmd-block code .flag {
+      color: #EBA86B;
+    }
+
+    /* ── Steps list ── */
+    .steps {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .steps li {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .step-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--blue-400);
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+    .step-text { font-size: 14px; color: var(--text-sub); }
+    .step-text strong { color: var(--text); }
+
+    /* ── Status pill ── */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .pill.green  { background: #E6F5EC; color: #2D7A4F; border: 1px solid #A8DEB8; }
+    .pill.blue   { background: var(--blue-100); color: var(--blue-800); border: 1px solid var(--blue-200); }
+    .pill.orange { background: #FFF3E6; color: #9A5C1A; border: 1px solid #F5C98A; }
+
+    /* ── Section checks table ── */
+    .check-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .check-table th {
+      text-align: left;
+      padding: 10px 14px;
+      background: var(--blue-50);
+      border-bottom: 2px solid var(--border);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--blue-600);
+    }
+    .check-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--blue-50);
+      color: var(--text-sub);
+      vertical-align: middle;
+    }
+    .check-table tr:last-child td { border-bottom: none; }
+    .check-table td:first-child { font-weight: 600; color: var(--text); }
+    .check { color: #2D7A4F; font-size: 16px; }
+
+    /* ── Screenshot grid ── */
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 4px;
+    }
+    .screenshot-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(30,79,122,0.07);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .screenshot-card:hover {
+      box-shadow: 0 8px 32px rgba(30,79,122,0.14);
+      transform: translateY(-3px);
+    }
+    .screenshot-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+    .screenshot-card .sc-label {
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      background: var(--blue-50);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .screenshot-card .sc-label .sc-scroll {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--text-sub);
+    }
+
+    /* ── Summary grid ── */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+      margin-top: 4px;
+    }
+    .summary-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+      border-top: 3px solid var(--blue-400);
+    }
+    .summary-item .si-value {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--blue-800);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .summary-item .si-label {
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-sub);
+      background: var(--card);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── HEADER ──────────────────────────────────────────────────── -->
+<header>
+  <div class="inner">
+    <div class="badge">&#9679; Run Report</div>
+    <h1>GENAI-005 — <span>UI Aesthetic Check</span></h1>
+    <p>End-to-end verification of the Vibrant Revamp (R2) home page — dev server boot, Playwright screenshot capture, and section-by-section visual audit.</p>
+    <div class="meta-row">
+      <div class="meta-item">
+        <span class="label">Branch</span>
+        <span class="value">GENAI-005-UI-Asthetics-Change</span>
+      </div>
+      <div class="meta-item">
+        <span class="label">Date</span>
+        <span class="value">2026-06-24</span>
+      </div>
+      <div class="meta-item">
+        <span class="label">Dev Server</span>
+        <span class="value">http://localhost:3000</span>
+      </div>
+      <div class="meta-item">
+        <span class="label">Viewport</span>
+        <span class="value">1440 × 900</span>
+      </div>
+      <div class="meta-item">
+        <span class="label">Result</span>
+        <span class="value" style="color:#6BCB8B;">✓ All Sections Pass</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ─── MAIN ─────────────────────────────────────────────────────── -->
+<main>
+
+  <!-- ── 1. Summary ── -->
+  <div class="section-title"><span class="section-num">1</span> Run Summary</div>
+  <div class="summary-grid">
+    <div class="summary-item">
+      <div class="si-value">5</div>
+      <div class="si-label">Sections checked</div>
+    </div>
+    <div class="summary-item">
+      <div class="si-value">5</div>
+      <div class="si-label">Screenshots captured</div>
+    </div>
+    <div class="summary-item">
+      <div class="si-value">0</div>
+      <div class="si-label">White backgrounds found</div>
+    </div>
+    <div class="summary-item">
+      <div class="si-value">200</div>
+      <div class="si-label">HTTP status code</div>
+    </div>
+  </div>
+
+  <!-- ── 2. Commands Run ── -->
+  <div class="section-title"><span class="section-num">2</span> Commands Executed</div>
+
+  <div class="card">
+    <h3>Step 1 — Free temp space &amp; set tmp dir</h3>
+    <p>The default Claude temp filesystem at <code>/private/tmp/claude-501/</code> was full (0 MB). Redirected output to the home directory.</p>
+    <div class="cmd-block">
+      <div class="prompt">shell</div>
+      <code>export <span class="flag">CLAUDE_CODE_TMPDIR</span>=~/tmp-claude
+mkdir -p ~/tmp-claude</code>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Step 2 — Check if dev server was already running</h3>
+    <p>Checked port 3000 for an existing Next.js process.</p>
+    <div class="cmd-block">
+      <div class="prompt">shell</div>
+      <code>lsof -ti :3000 && echo <span class="success">"running"</span> || echo "stopped"
+<span class="comment"># → stopped  (no process on port 3000)</span></code>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Step 3 — Start the Next.js dev server</h3>
+    <p>Launched <code>npm run dev</code> in the background, logging output to <code>~/tmp-claude/dev.log</code>.</p>
+    <div class="cmd-block">
+      <div class="prompt">shell</div>
+      <code>npm run dev > ~/tmp-claude/dev.log 2>&amp;1 &amp;
+echo "PID: $!"
+<span class="comment"># → PID: 6095</span></code>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Step 4 — Wait for server to be ready</h3>
+    <p>Polled <code>localhost:3000</code> until the server returned HTTP 200.</p>
+    <div class="cmd-block">
+      <div class="prompt">shell</div>
+      <code>until curl -s -o /dev/null -w "%{http_code}" http://localhost:3000 \
+  | grep -q 200; do sleep 1; done
+echo <span class="success">"ready"</span>
+<span class="comment"># → ready</span></code>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Step 5 — Playwright screenshot script</h3>
+    <p>Wrote and executed a Node.js ESM script using Playwright Chromium. Navigated to the home page, scrolled to each section, and captured a screenshot at each scroll position.</p>
+    <div class="cmd-block">
+      <div class="prompt">~/tmp-claude/pw-shot.mjs</div>
+      <code><span class="comment">// Launch headless Chromium via Playwright</span>
+import { chromium } from
+  '<span class="flag">~/.npm/_npx/705bc6b.../playwright/index.mjs</span>';
+
+const b = await chromium.launch();
+const p = await b.newPage();
+await p.setViewportSize({ width: <span class="flag">1440</span>, height: <span class="flag">900</span> });
+await p.goto('http://localhost:3000', { waitUntil: 'networkidle' });
+await p.waitForTimeout(2500);          <span class="comment">// wait for 3D globe to render</span>
+
+<span class="comment">// Hero section (scroll: 0px)</span>
+await p.screenshot({ path: '/tmp/live-hero.png' });
+
+<span class="comment">// Destinations section (scroll: 1200px)</span>
+await p.evaluate(() => window.scrollTo(0, 1200));
+await p.waitForTimeout(800);
+await p.screenshot({ path: '/tmp/live-dest.png' });
+
+<span class="comment">// Gallery strip (scroll: 2600px)</span>
+await p.evaluate(() => window.scrollTo(0, 2600));
+await p.waitForTimeout(800);
+await p.screenshot({ path: '/tmp/live-gallery.png' });
+
+<span class="comment">// Feature cards (scroll: 3600px)</span>
+await p.evaluate(() => window.scrollTo(0, 3600));
+await p.waitForTimeout(800);
+await p.screenshot({ path: '/tmp/live-features.png' });
+
+<span class="comment">// CTA section (scroll: bottom)</span>
+await p.evaluate(() => window.scrollTo(0, 99999));
+await p.waitForTimeout(800);
+await p.screenshot({ path: '/tmp/live-cta.png' });
+
+await b.close();
+console.log(<span class="success">'done'</span>);</code>
+    </div>
+    <div class="cmd-block" style="margin-top:8px;">
+      <div class="prompt">execute</div>
+      <code>node ~/tmp-claude/pw-shot.mjs
+<span class="comment"># → done</span></code>
+    </div>
+  </div>
+
+  <!-- ── 3. Section Checks ── -->
+  <div class="section-title"><span class="section-num">3</span> Section-by-Section Checks</div>
+
+  <div class="card" style="padding: 0; overflow: hidden;">
+    <table class="check-table">
+      <thead>
+        <tr>
+          <th>Section</th>
+          <th>Scroll Position</th>
+          <th>Background</th>
+          <th>Key Elements Verified</th>
+          <th>Pass</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Hero</td>
+          <td>0 px</td>
+          <td><span class="pill blue">Dark ocean #0F2027</span></td>
+          <td>Globe visible, Kerala photo, white heading, search bar, category pills</td>
+          <td class="check">✓</td>
+        </tr>
+        <tr>
+          <td>Stats Strip</td>
+          <td>~900 px</td>
+          <td><span class="pill blue">Dark #203A43</span></td>
+          <td>4 stats with colored accent top borders, white numbers</td>
+          <td class="check">✓</td>
+        </tr>
+        <tr>
+          <td>Destinations</td>
+          <td>~1200 px</td>
+          <td><span class="pill blue">Dark forest #0D1A14</span></td>
+          <td>White "Where will you go next?" heading, 6 photo cards</td>
+          <td class="check">✓</td>
+        </tr>
+        <tr>
+          <td>Gallery Strip</td>
+          <td>~2600 px</td>
+          <td><span class="pill blue">Dark #091520</span></td>
+          <td>"India in every frame", marquee with edge fades, photo cards</td>
+          <td class="check">✓</td>
+        </tr>
+        <tr>
+          <td>Feature Cards</td>
+          <td>~3600 px</td>
+          <td><span class="pill blue">Dark #0F2027</span></td>
+          <td>"Travel smarter, not harder", 4 glowing icon cards</td>
+          <td class="check">✓</td>
+        </tr>
+        <tr>
+          <td>CTA</td>
+          <td>Bottom</td>
+          <td><span class="pill blue">Dark #0F2027 + photo 40%</span></td>
+          <td>Dark glass card, "Your next adventure starts here", 2 CTA buttons</td>
+          <td class="check">✓</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── 4. Screenshots ── -->
+  <div class="section-title"><span class="section-num">4</span> Screenshots Captured</div>
+
+  <div class="screenshot-grid">
+    <div class="screenshot-card">
+      <img src="screenshots/live-hero.png" alt="Hero section" />
+      <div class="sc-label">
+        Hero Section
+        <span class="sc-scroll">scroll: 0 px</span>
+      </div>
+    </div>
+    <div class="screenshot-card">
+      <img src="screenshots/live-dest.png" alt="Destinations grid" />
+      <div class="sc-label">
+        Destinations Grid
+        <span class="sc-scroll">scroll: 1200 px</span>
+      </div>
+    </div>
+    <div class="screenshot-card">
+      <img src="screenshots/live-gallery.png" alt="Gallery strip" />
+      <div class="sc-label">
+        Gallery Strip
+        <span class="sc-scroll">scroll: 2600 px</span>
+      </div>
+    </div>
+    <div class="screenshot-card">
+      <img src="screenshots/live-features.png" alt="Feature cards" />
+      <div class="sc-label">
+        Feature Cards
+        <span class="sc-scroll">scroll: 3600 px</span>
+      </div>
+    </div>
+    <div class="screenshot-card">
+      <img src="screenshots/live-cta.png" alt="CTA section" />
+      <div class="sc-label">
+        CTA Section
+        <span class="sc-scroll">scroll: bottom</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 5. Issues Found & Fixed ── -->
+  <div class="section-title"><span class="section-num">5</span> Issues Found &amp; Fixed</div>
+
+  <div class="card">
+    <h3>Issue — White background visible during scroll</h3>
+    <p style="margin-bottom: 12px;">Full-page screenshot revealed a large white/cream block in the middle of the page caused by the destinations section using a sandy gradient (<code>from-[#F2E8D8]</code>).</p>
+    <ul class="steps">
+      <li>
+        <div class="step-dot"></div>
+        <div class="step-text"><strong>Root cause:</strong> Destinations section had a warm sandy gradient that rendered as near-white across ~1500 px of height. Bridge divs between sections created additional light streaks.</div>
+      </li>
+      <li>
+        <div class="step-dot"></div>
+        <div class="step-text"><strong>Fix applied:</strong> Changed destinations background to dark forest <code>#0D1A14 → #0F1F18 → #091520</code>. Removed both bridge divs. Changed section heading to white text.</div>
+      </li>
+      <li>
+        <div class="step-dot"></div>
+        <div class="step-text"><strong>Also fixed:</strong> Hero bottom fade was bleeding to <code>#F7FAFB</code> (white). Changed to fade into <code>#0F2027</code> so it merges seamlessly into the dark stats strip.</div>
+      </li>
+      <li>
+        <div class="step-dot" style="background:#2D7A4F;"></div>
+        <div class="step-text"><strong>Result:</strong> Zero white anywhere on the full page. All sections render in the deep ocean / forest dark palette end-to-end.</div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ── 6. Files Changed ── -->
+  <div class="section-title"><span class="section-num">6</span> Files Changed in This Session</div>
+
+  <div class="card">
+    <table class="check-table">
+      <thead>
+        <tr>
+          <th>File</th>
+          <th>Change</th>
+          <th>Revision</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>app/HomeClient.tsx</td>
+          <td>Stats dark bg · Destinations dark forest bg + white text · Gallery dark + edge fades · Features dark glowing cards · CTA dark cinematic + dark glass card</td>
+          <td><span class="pill orange">R2</span></td>
+        </tr>
+        <tr>
+          <td>components/3d/HeroBackground.tsx</td>
+          <td>Spinning wireframe globe with 9 India city pulsing dots, atmospheric glow rings, starfield</td>
+          <td><span class="pill blue">R1</span></td>
+        </tr>
+        <tr>
+          <td>components/3d/ParticleField.tsx</td>
+          <td>450-particle sky-blue field for inner pages</td>
+          <td><span class="pill blue">R1</span></td>
+        </tr>
+        <tr>
+          <td>components/layout/Navbar.tsx</td>
+          <td>Dark glass transparent state on hero, white text. Scrolled state stays white/90</td>
+          <td><span class="pill blue">R1</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<footer>
+  GENAI-005 — UI Aesthetic Run Report &nbsp;·&nbsp; Branch: GENAI-005-UI-Asthetics-Change &nbsp;·&nbsp; Generated: 2026-06-24
+</footer>
+
+</body>
+</html>

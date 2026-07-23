@@ -1,0 +1,1230 @@
+
+
+<title>Image Upload Task Brief — Tourism India Platform</title>
+<style>
+  /* ── Tokens ─────────────────────────────────────────────────────────── */
+  :root {
+    --blue:      #6CB6E4;
+    --green:     #4F8A65;
+    --amber:     #EBA86B;
+    --bg:        #F5F8FA;
+    --surface:   #FFFFFF;
+    --border:    #DDE6EC;
+    --text:      #1A2C38;
+    --muted:     #5A7585;
+    --code-bg:   #EAF2F8;
+    --step-bg:   #EBF5FC;
+    --tag-nature:#E8F4ED;
+    --tag-nature-text:#2D6644;
+    --tag-beach: #EAF5FB;
+    --tag-beach-text: #1A6A9A;
+    --tag-heritage:#FDF3E7;
+    --tag-heritage-text:#8B5A1A;
+    --tag-mountain:#F0EDF9;
+    --tag-mountain-text:#4A2D8A;
+    --tag-adventure:#FDEAEA;
+    --tag-adventure-text:#8A1A1A;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:       #0D1820;
+      --surface:  #132030;
+      --border:   #1F3448;
+      --text:     #D8E8F0;
+      --muted:    #7A9EB0;
+      --code-bg:  #0A1E2E;
+      --step-bg:  #0F2438;
+      --tag-nature:#0F2A1A;
+      --tag-nature-text:#6FBF8F;
+      --tag-beach: #0A1E2E;
+      --tag-beach-text: #6ABFE8;
+      --tag-heritage:#2A1A08;
+      --tag-heritage-text:#E8A84A;
+      --tag-mountain:#1A102A;
+      --tag-mountain-text:#A882E8;
+      --tag-adventure:#2A0F0F;
+      --tag-adventure-text:#E88282;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg:       #0D1820;
+    --surface:  #132030;
+    --border:   #1F3448;
+    --text:     #D8E8F0;
+    --muted:    #7A9EB0;
+    --code-bg:  #0A1E2E;
+    --step-bg:  #0F2438;
+    --tag-nature:#0F2A1A;
+    --tag-nature-text:#6FBF8F;
+    --tag-beach: #0A1E2E;
+    --tag-beach-text: #6ABFE8;
+    --tag-heritage:#2A1A08;
+    --tag-heritage-text:#E8A84A;
+    --tag-mountain:#1A102A;
+    --tag-mountain-text:#A882E8;
+    --tag-adventure:#2A0F0F;
+    --tag-adventure-text:#E88282;
+  }
+  :root[data-theme="light"] {
+    --bg:        #F5F8FA;
+    --surface:   #FFFFFF;
+    --border:    #DDE6EC;
+    --text:      #1A2C38;
+    --muted:     #5A7585;
+    --code-bg:   #EAF2F8;
+    --step-bg:   #EBF5FC;
+    --tag-nature:#E8F4ED;
+    --tag-nature-text:#2D6644;
+    --tag-beach: #EAF5FB;
+    --tag-beach-text: #1A6A9A;
+    --tag-heritage:#FDF3E7;
+    --tag-heritage-text:#8B5A1A;
+    --tag-mountain:#F0EDF9;
+    --tag-mountain-text:#4A2D8A;
+    --tag-adventure:#FDEAEA;
+    --tag-adventure-text:#8A1A1A;
+  }
+
+  /* ── Reset & base ───────────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ── Layout ─────────────────────────────────────────────────────────── */
+  .wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* ── Header ─────────────────────────────────────────────────────────── */
+  .doc-header {
+    border-bottom: 2px solid var(--blue);
+    padding: 40px 0 28px;
+    margin-bottom: 40px;
+  }
+  .doc-header .eyebrow {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .doc-header .eyebrow::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--blue);
+    flex-shrink: 0;
+  }
+  .doc-header h1 {
+    font-size: clamp(1.7rem, 4vw, 2.4rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    text-wrap: balance;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+  .doc-header .subtitle {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 580px;
+  }
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .meta-item .label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+  .meta-item .value {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* ── Section card ────────────────────────────────────────────────────── */
+  .section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+  }
+  .section-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    background: var(--step-bg);
+  }
+
+  /* ── Steps ───────────────────────────────────────────────────────────── */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .step {
+    display: flex;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .step:last-child { border-bottom: none; padding-bottom: 0; }
+  .step:first-child { padding-top: 0; }
+  .step-num {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--step-bg);
+    border: 1.5px solid var(--blue);
+    color: var(--blue);
+    font-size: 0.72rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+    font-variant-numeric: tabular-nums;
+  }
+  .step-content strong {
+    display: block;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .step-content p, .step-content li {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .step-content ul {
+    padding-left: 16px;
+    margin-top: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  /* ── Code / URL ──────────────────────────────────────────────────────── */
+  code, .code-block {
+    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 0.82rem;
+    background: var(--code-bg);
+    color: var(--blue);
+    padding: 2px 7px;
+    border-radius: 5px;
+    border: 1px solid var(--border);
+    word-break: break-all;
+  }
+  .code-block {
+    display: block;
+    padding: 14px 16px;
+    margin: 10px 0;
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .code-block .hl { color: var(--blue); font-weight: 700; }
+  .code-block .comment { color: var(--muted); }
+
+  /* ── Places table ────────────────────────────────────────────────────── */
+  .table-wrap { overflow-x: auto; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+  }
+  thead th {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+  }
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody td {
+    padding: 11px 12px;
+    vertical-align: middle;
+    color: var(--text);
+  }
+  tbody tr:hover td { background: var(--step-bg); }
+  .place-name { font-weight: 700; font-size: 0.88rem; }
+  .place-state { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+  .search-hint {
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* ── Tags ────────────────────────────────────────────────────────────── */
+  .tag {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 3px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .tag-nature    { background: var(--tag-nature);    color: var(--tag-nature-text); }
+  .tag-beach     { background: var(--tag-beach);     color: var(--tag-beach-text); }
+  .tag-heritage  { background: var(--tag-heritage);  color: var(--tag-heritage-text); }
+  .tag-mountain  { background: var(--tag-mountain);  color: var(--tag-mountain-text); }
+  .tag-adventure { background: var(--tag-adventure); color: var(--tag-adventure-text); }
+
+  /* ── Count badge ─────────────────────────────────────────────────────── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    background: var(--amber);
+    color: #fff;
+    min-width: 22px;
+    height: 22px;
+    border-radius: 11px;
+    padding: 0 6px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ── Callout ─────────────────────────────────────────────────────────── */
+  .callout {
+    border-left: 3px solid var(--blue);
+    background: var(--step-bg);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin: 14px 0;
+    font-size: 0.86rem;
+    color: var(--text);
+  }
+  .callout.green  { border-color: var(--green); }
+  .callout.amber  { border-color: var(--amber); }
+  .callout strong { font-weight: 700; }
+
+  /* ── Checklist ───────────────────────────────────────────────────────── */
+  .checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+  .check-item .box {
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    background: var(--surface);
+  }
+
+  /* ── Grid ────────────────────────────────────────────────────────────── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 600px) {
+    .two-col { grid-template-columns: 1fr; }
+    .section { padding: 20px 18px; }
+  }
+
+  /* ── Mini card ───────────────────────────────────────────────────────── */
+  .mini-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 0.84rem;
+  }
+  .mini-card strong {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 5px;
+  }
+
+  /* ── Summary row ─────────────────────────────────────────────────────── */
+  .summary-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 22px;
+  }
+  .stat-tile {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 20px;
+    min-width: 110px;
+    text-align: center;
+  }
+  .stat-tile .num {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--blue);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+  .stat-tile .lbl {
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+  }
+
+  /* ── TOC ─────────────────────────────────────────────────────────────── */
+  .toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 18px 0 4px;
+    border-top: 1px solid var(--border);
+    margin-top: 18px;
+  }
+  .toc a {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--muted);
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    transition: all .15s;
+  }
+  .toc a:hover {
+    background: var(--step-bg);
+    color: var(--blue);
+    border-color: var(--blue);
+    text-decoration: none;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 8px 0;
+  }
+
+  .green-dot {
+    display: inline-block;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+</style>
+
+<div class="wrap">
+
+  <!-- ── HEADER ──────────────────────────────────────────────────────── -->
+  <header class="doc-header">
+    <div class="eyebrow">Tourism India Platform · Media Task</div>
+    <h1>Image Sourcing &amp; Upload Brief</h1>
+    <p class="subtitle">
+      A step-by-step guide for sourcing HD travel photos from Unsplash and uploading them
+      to Cloudinary for use in the Tourism India web platform.
+    </p>
+    <div class="meta-row">
+      <div class="meta-item">
+        <span class="label">Project</span>
+        <span class="value">tourism-platform-web</span>
+      </div>
+      <div class="meta-item">
+        <span class="label">Cloudinary Account</span>
+        <span class="value">duajyized</span>
+      </div>
+      <div class="meta-item">
+        <span class="label">Image Source</span>
+        <span class="value">unsplash.com (free)</span>
+      </div>
+      <div class="meta-item">
+        <span class="label">Total Places</span>
+        <span class="value">12 places · ~48 images</span>
+      </div>
+    </div>
+    <nav class="toc" aria-label="Jump to section">
+      <a href="#overview">Overview</a>
+      <a href="#cloudinary">Cloudinary Setup</a>
+      <a href="#unsplash">Unsplash Guide</a>
+      <a href="#places">Places List</a>
+      <a href="#upload">Upload Process</a>
+      <a href="#naming">Naming Convention</a>
+      <a href="#url">URL Format</a>
+      <a href="#code">Code Changes</a>
+      <a href="#checklist">Final Checklist</a>
+    </nav>
+  </header>
+
+  <!-- ── OVERVIEW ────────────────────────────────────────────────────── -->
+  <section class="section" id="overview">
+    <div class="section-title">
+      <span class="icon">📋</span>
+      Task Overview
+    </div>
+
+    <div class="summary-row">
+      <div class="stat-tile"><div class="num">19</div><div class="lbl">Places</div></div>
+      <div class="stat-tile"><div class="num">4</div><div class="lbl">Files</div></div>
+      <div class="stat-tile"><div class="num">~77</div><div class="lbl">Total Images</div></div>
+      <div class="stat-tile"><div class="num">Free</div><div class="lbl">Cost</div></div>
+    </div>
+
+    <p style="font-size:0.9rem; color:var(--muted); margin-bottom:14px;">
+      The platform currently uses placeholder images from Unsplash URLs hardcoded in the source code — across <strong style="color:var(--text)">two files</strong>.
+      The goal is to download high-quality photos from <strong style="color:var(--text)">unsplash.com</strong> and
+      upload them to the <strong style="color:var(--text)">Cloudinary media library</strong>.
+    </p>
+
+    <div class="two-col" style="margin-bottom:6px;">
+      <div class="mini-card">
+        <strong>lib/mock-places.ts</strong>
+        12 tourist destinations · 4 images each (1 hero + 3 gallery) = <strong style="color:var(--text)">48 images</strong>
+      </div>
+      <div class="mini-card">
+        <strong>lib/mock-queues.ts</strong>
+        12 queue locations · 1 image each (hero only) = <strong style="color:var(--text)">12 images</strong>
+        <br><span style="font-size:0.78rem; color:var(--muted);">7 new places not in mock-places</span>
+      </div>
+      <div class="mini-card">
+        <strong>app/HomeClient.tsx</strong>
+        15 home page images (hero, 6 destination cards, 7 gallery, 1 CTA) = <strong style="color:var(--text)">15 images</strong>
+        <br><span style="font-size:0.78rem; color:var(--muted);">Upload to <code>tourism/home/</code> folder</span>
+      </div>
+      <div class="mini-card">
+        <strong>app/page.tsx</strong>
+        1 Open Graph / social share image (1200×630px) = <strong style="color:var(--text)">1 image</strong>
+        <br><span style="font-size:0.78rem; color:var(--muted);">Upload to <code>tourism/og/</code> folder</span>
+      </div>
+    </div>
+
+    <div class="callout green">
+      <strong>What you do NOT need to touch:</strong> No code, no command line, no developer tools.
+      This is entirely a browser-based task — Unsplash + Cloudinary console only.
+    </div>
+
+    <div class="callout amber">
+      <strong>Important:</strong> Unsplash photos are free for commercial use but require no
+      account for downloading. Always download the <strong>largest size available</strong>
+      (click the Download button → choose the largest option).
+    </div>
+  </section>
+
+  <!-- ── CLOUDINARY SETUP ─────────────────────────────────────────────── -->
+  <section class="section" id="cloudinary">
+    <div class="section-title">
+      <span class="icon">☁️</span>
+      Cloudinary Setup — Two Options
+    </div>
+
+    <div class="two-col" style="margin-bottom:16px;">
+      <div class="mini-card">
+        <strong>Option A — Recommended</strong>
+        Get added to the existing account
+        <code>duajyized</code> by the project owner.
+        You'll receive an invite email to join as a collaborator.
+        <div class="callout" style="margin-top:10px; font-size:0.82rem;">
+          Images go directly to the right account — no transfer needed.
+        </div>
+      </div>
+      <div class="mini-card">
+        <strong>Option B — Own Account</strong>
+        Create your own free Cloudinary account, upload images there,
+        then export and send the image files or public IDs.
+        <div class="callout amber" style="margin-top:10px; font-size:0.82rem;">
+          Extra step: developer must re-upload to main account.
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <p style="font-size:0.85rem; font-weight:700; color:var(--text); margin:14px 0 10px;">
+      How to create a FREE Cloudinary account (Option B or for reference)
+    </p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>Go to cloudinary.com</strong>
+          <p>Visit <a href="https://cloudinary.com" target="_blank">cloudinary.com</a> and click <em>Sign Up for Free</em>. No credit card required.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>Create your account</strong>
+          <p>Enter your name, email, and a password. Confirm your email via the verification link sent to your inbox.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>Note your Cloud Name</strong>
+          <p>After login, your dashboard shows your <strong>Cloud Name</strong> (e.g. <code>my-cloud-123</code>). Share this with the developer — it's needed to construct image URLs.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <strong>Open the Media Library</strong>
+          <p>Click <strong>Media Library</strong> in the left sidebar. This is where you'll upload all images. You can create folders here to organise them.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:18px;">
+      <strong>Free plan limits:</strong> 25 GB storage · 25 GB bandwidth/month.
+      For ~48 tourism photos this is more than enough.
+    </div>
+  </section>
+
+  <!-- ── UNSPLASH GUIDE ───────────────────────────────────────────────── -->
+  <section class="section" id="unsplash">
+    <div class="section-title">
+      <span class="icon">📸</span>
+      How to Download from Unsplash
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>Search the place name</strong>
+          <p>Go to <a href="https://unsplash.com" target="_blank">unsplash.com</a> and type the place name in the search bar (e.g. <em>"Valley of Flowers India"</em>). Use the search hints in the Places List below.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>Choose landscape, scenic shots</strong>
+          <p>Prefer wide landscape photos that show the place clearly. Avoid portraits, crowds of people, or heavily text-overlaid images. Bright, natural lighting is best.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>Download the largest size</strong>
+          <p>Click the photo → click the <strong>Download</strong> button (arrow icon, top right) → when prompted, choose the <strong>largest available size</strong>. This is usually 4000–6000px wide.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <strong>Rename the file before uploading</strong>
+          <p>Rename the downloaded file to follow the naming convention below <em>before</em> uploading to Cloudinary. This saves re-naming work later.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider" style="margin: 18px 0 14px;">
+
+    <p style="font-size:0.85rem; font-weight:700; color:var(--text); margin-bottom:10px;">Image quality guidelines</p>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <strong>Hero image (1 per place)</strong>
+        Wide landscape shot of the landmark/scenery.
+        Min 1600px wide, landscape orientation (16:9 or wider).
+        Should work as a full-bleed background.
+      </div>
+      <div class="mini-card">
+        <strong>Gallery images (3 per place)</strong>
+        Mix of angles — wide establishing shot, detail shot, atmosphere shot.
+        Min 800px wide. Can be portrait or landscape.
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PLACES LIST ──────────────────────────────────────────────────── -->
+  <section class="section" id="places">
+    <div class="section-title">
+      <span class="icon">🗺️</span>
+      Places List
+      <span class="badge">12</span>
+    </div>
+
+    <p style="font-size:0.84rem; color:var(--muted); margin-bottom:16px;">
+      Places marked <span class="tag tag-nature" style="font-size:0.65rem;">mock-places</span> need <strong style="color:var(--text)">4 images</strong> (1 hero + 3 gallery).
+      Places marked <span class="tag tag-heritage" style="font-size:0.65rem;">mock-queues</span> need <strong style="color:var(--text)">1 image</strong> (hero only). 5 places appear in both files — upload once, use in both.
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Place</th>
+            <th>Category</th>
+            <th>Unsplash Search Hint</th>
+            <th>File</th>
+            <th>Images</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background:var(--step-bg);">
+            <td colspan="6" style="font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); padding:8px 12px;">mock-places.ts — 4 images each (1 hero + 3 gallery)</td>
+          </tr>
+          <tr>
+            <td style="color:var(--muted); font-variant-numeric:tabular-nums; font-size:0.78rem;">01</td>
+            <td><div class="place-name">Hampi Ruins</div><div class="place-state">Karnataka</div></td>
+            <td><span class="tag tag-heritage">Heritage</span></td>
+            <td><span class="search-hint">"Hampi ruins Karnataka" · "Vijayanagara temple" · "Hampi boulder"</span></td>
+            <td><code style="font-size:0.72rem;">mock-places</code></td>
+            <td style="text-align:center; font-size:0.82rem; color:var(--muted);">1+3</td>
+          </tr>
+          <tr>
+            <td style="color:var(--muted); font-variant-numeric:tabular-nums; font-size:0.78rem;">02</td>
+            <td><div class="place-name">Marina Beach</div><div class="place-state">Tamil Nadu</div></td>
+            <td><span class="tag tag-beach">Beach</span></td>
+            <td><span class="search-hint">"Marina beach Chennai" · "Bay of Bengal beach India" · "India beach sunrise"</span></td>
+            <td><code style="font-size:0.72rem;">mock-places</code></td>
+            <td style="text-align:center; font-size:0.82rem; color:var(--muted);">1+3</td>
+          </tr>
+          <tr>
+            <td style="color:var(--muted); font-variant-numeric:tabular-nums; font-size:0.78rem;">03</td>
+            <td><div class="place-name">Valley of Flowers</div><div class="place-state">Uttarakhand</div></td>
+            <td><span class="tag tag-nature">Nature</span></td>
+            <td><span class="search-hint">"Valley of flowers India" · "Himalayan wildflowers" · "alpine meadow India"</span></td>
+            <td><code style="font-size:0.72rem;">mock-places</code></td>
+            <td style="text-align:center; font-size:0.82rem; color:var(--muted);">1+3</td>
+          </tr>
+          <tr>
+            <td style="color:var(--muted); font-variant-numeric:tabular-nums; font-size:0.78rem;">04</td>
+            <td><div class="place-name">Spiti Valley</div><div class="place-state">Himachal Pradesh</div></td>
+            <td><span class="tag tag-mountain">Mountain</span></td>
+            <td><span class="search-hint">"Spiti Valley" · "Key monastery" · "Himachal cold desert landscape"</span></td>
+            <td><code style="font-size:0.72rem;">mock-places</code></td>
+            <td style="text-align:center; font-size:0.82rem; color:var(--muted);">1+3</td>
+          </tr>
+          <tr>
+            <td style="color:var(--muted); font-variant-numeric:tabular-nums; font-size:0.78rem;">05</td>
+            <td><div class="place-name">Kerala Backwaters</div><div class="place-state">Kerala</div></td>
+            <td><span class="tag tag-nature">Nature</span></td>
+            <td><span class="search-hint">"Kerala backwaters houseboat" · "Alleppey canal" · "Kerala coconut water"</span></td>
+            <td><code style="font-size:0.72rem;">both</code></td>
+            <td style="text-align:center; font-size:0.82rem; color:var(--muted);">1+3</td>
+          </tr>
+          <tr>
+            <td style="color:var(--muted); font-variant-numeric:tabular-nums; font-size:0.78rem;">06</td>
+            <td><div class="place-name">Ranthambore</div><div class="place-state">Rajasthan</div></td>
+            <td><span class="tag tag-adventure">Adventure</span></td>
+            <td><span class="search-hint">"Ranthambore tiger" · "Bengal tiger India" · "India wildlife safari"</span></td>
+            <td><code style="font-size:0.72rem;">both</code></td>
+            <td style="text-align:center; font-size:0.82rem; color:var(--muted);">1+3</td>
+          </tr>
+          <tr>
+            <td style="color:var(--muted); font-variant-numeric:tabular-nums; font-size:0.78rem;">07</td>
+            <td><div class="place-name">Andaman Islands</div><div class="place-state">Andaman &amp; Nicobar</div></td>
+            <td><span class="tag tag-beach">Beach</span></td>
+            <td><span class="search-hint">"Radhanagar beach Havelock" · "Andaman turquoise sea" · "tropical beach India"</span></td>
+            <td><code style="font-size:0.72rem;">both</code></td>
+            <td style="text-align:center; font-size:0.82rem; color:var(--muted);">1+3</td>
+          </tr>
+          <tr>
+            <td style="color:var(--muted); font-variant-numeric:tabular-nums; font-size:0.78rem;">08</td>
+            <td><div class="place-name">Munnar Tea Hills</div><div class="place-state">Kerala</div></td>
+            <td><span class="tag tag-mountain">Mountain</span></td>
+            <td><span class="search-hint">"Munnar tea plantation" · "Western Ghats tea estate" · "Kerala hill station mist"</span></td>
+            <td><code style="font-size:0.72rem;">both</code></td>
+            <td style="text-align:center; font-size:0.82rem; color:var(--muted);">1+3</td>
+          </tr>
+          <tr>
+            <td style="color:var(--muted); font-variant-numeric:tabular-nums; font-size:0.78rem;">09</td>
+            <td><div class="place-name">Ellora Caves</div><div class="place-state">Maharashtra</div></td>
+            <td><span class="tag tag-heritage">Heritage</span></td>
+            <td><span class="search-hint">"Ellora caves Aurangabad" · "Kailasa temple Ellora" · "rock cut cave India"</span></td>
+            <td><code style="font-size:0.72rem;">mock-places</code></td>
+            <td style="text-align:center; font-size:0.82rem; color:var(--muted);">1+3</td>
+          </tr>
+          <tr>
+            <td style="color:var(--muted); font-variant-numeric:tabular-nums; font-size:0.78rem;">10</td>
+            <td><div class="place-name">Coorg Coffee Estates</div><div class="place-state">Karnataka</div></td>
+            <td><span class="tag tag-nature">Nature</span></td>
+            <td><span class="search-hint">"Coorg Kodagu coffee estate" · "Coorg misty hills" · "Karnataka coffee plantation"</span></td>
+            <td><code style="font-size:0.72rem;">mock-places</code></td>
+            <td style="text-align:center; font-size:0.82rem; color:var(--muted);">1+3</td>
+          </tr>
+          <tr>
+            <td style="color:var(--muted); font-variant-numeric:tabular-nums; font-size:0.78rem;">11</td>
+            <td><div class="place-name">Pondicherry French Quarter</div><div class="place-state">Puducherry</div></td>
+            <td><span class="tag tag-heritage">Heritage</span></td>
+            <td><span class="search-hint">"Pondicherry French quarter" · "Puducherry colourful street" · "Pondicherry bougainvillea"</span></td>
+            <td><code style="font-size:0.72rem;">mock-places</code></td>
+            <td style="text-align:center; font-size:0.82rem; color:var(--muted);">1+3</td>
+          </tr>
+          <tr>
+            <td style="color:var(--muted); font-variant-numeric:tabular-nums; font-size:0.78rem;">12</td>
+            <td><div class="place-name">Ziro Valley</div><div class="place-state">Arunachal Pradesh</div></td>
+            <td><span class="tag tag-adventure">Adventure</span></td>
+            <td><span class="search-hint">"Ziro Valley Arunachal" · "Apatani tribe paddy field" · "Northeast India green valley"</span></td>
+            <td><code style="font-size:0.72rem;">mock-places</code></td>
+            <td style="text-align:center; font-size:0.82rem; color:var(--muted);">1+3</td>
+          </tr>
+          <tr style="background:var(--step-bg);">
+            <td colspan="6" style="font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); padding:8px 12px;">mock-queues.ts only — 1 hero image each (new places not in mock-places)</td>
+          </tr>
+          <tr>
+            <td style="color:var(--muted); font-variant-numeric:tabular-nums; font-size:0.78rem;">13</td>
+            <td><div class="place-name">Taj Mahal</div><div class="place-state">Uttar Pradesh</div></td>
+            <td><span class="tag tag-heritage">Heritage</span></td>
+            <td><span class="search-hint">"Taj Mahal Agra" · "Taj Mahal sunrise" · "Taj Mahal reflection pool"</span></td>
+            <td><code style="font-size:0.72rem;">mock-queues</code></td>
+            <td style="text-align:center; font-size:0.82rem; color:var(--muted);">1 only</td>
+          </tr>
+          <tr>
+            <td style="color:var(--muted); font-variant-numeric:tabular-nums; font-size:0.78rem;">14</td>
+            <td><div class="place-name">Jaisalmer Fort</div><div class="place-state">Rajasthan</div></td>
+            <td><span class="tag tag-heritage">Heritage</span></td>
+            <td><span class="search-hint">"Jaisalmer fort golden city" · "Rajasthan desert fort" · "Jaisalmer sandstone"</span></td>
+            <td><code style="font-size:0.72rem;">mock-queues</code></td>
+            <td style="text-align:center; font-size:0.82rem; color:var(--muted);">1 only</td>
+          </tr>
+          <tr>
+            <td style="color:var(--muted); font-variant-numeric:tabular-nums; font-size:0.78rem;">15</td>
+            <td><div class="place-name">Goa Beach Strip</div><div class="place-state">Goa</div></td>
+            <td><span class="tag tag-beach">Beach</span></td>
+            <td><span class="search-hint">"Goa beach India" · "Calangute beach" · "Goa coastline aerial"</span></td>
+            <td><code style="font-size:0.72rem;">mock-queues</code></td>
+            <td style="text-align:center; font-size:0.82rem; color:var(--muted);">1 only</td>
+          </tr>
+          <tr>
+            <td style="color:var(--muted); font-variant-numeric:tabular-nums; font-size:0.78rem;">16</td>
+            <td><div class="place-name">Varanasi Ghats</div><div class="place-state">Uttar Pradesh</div></td>
+            <td><span class="tag tag-heritage">Heritage</span></td>
+            <td><span class="search-hint">"Varanasi ghats sunrise" · "Ganges river Varanasi" · "Banaras evening aarti"</span></td>
+            <td><code style="font-size:0.72rem;">mock-queues</code></td>
+            <td style="text-align:center; font-size:0.82rem; color:var(--muted);">1 only</td>
+          </tr>
+          <tr>
+            <td style="color:var(--muted); font-variant-numeric:tabular-nums; font-size:0.78rem;">17</td>
+            <td><div class="place-name">Golden Temple</div><div class="place-state">Punjab</div></td>
+            <td><span class="tag tag-heritage">Heritage</span></td>
+            <td><span class="search-hint">"Golden Temple Amritsar" · "Harmandir Sahib" · "Amritsar Sikh temple reflection"</span></td>
+            <td><code style="font-size:0.72rem;">mock-queues</code></td>
+            <td style="text-align:center; font-size:0.82rem; color:var(--muted);">1 only</td>
+          </tr>
+          <tr>
+            <td style="color:var(--muted); font-variant-numeric:tabular-nums; font-size:0.78rem;">18</td>
+            <td><div class="place-name">Mysore Palace</div><div class="place-state">Karnataka</div></td>
+            <td><span class="tag tag-heritage">Heritage</span></td>
+            <td><span class="search-hint">"Mysore Palace illuminated" · "Amba Vilas palace" · "Mysore palace night lights"</span></td>
+            <td><code style="font-size:0.72rem;">mock-queues</code></td>
+            <td style="text-align:center; font-size:0.82rem; color:var(--muted);">1 only</td>
+          </tr>
+          <tr>
+            <td style="color:var(--muted); font-variant-numeric:tabular-nums; font-size:0.78rem;">19</td>
+            <td><div class="place-name">Leh-Ladakh</div><div class="place-state">Ladakh</div></td>
+            <td><span class="tag tag-mountain">Mountain</span></td>
+            <td><span class="search-hint">"Leh Ladakh landscape" · "Pangong lake Ladakh" · "Ladakh monastery mountain"</span></td>
+            <td><code style="font-size:0.72rem;">mock-queues</code></td>
+            <td style="text-align:center; font-size:0.82rem; color:var(--muted);">1 only</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── UPLOAD PROCESS ───────────────────────────────────────────────── -->
+  <section class="section" id="upload">
+    <div class="section-title">
+      <span class="icon">⬆️</span>
+      Uploading to Cloudinary Console
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>Log in to Cloudinary</strong>
+          <p>Go to <a href="https://console.cloudinary.com" target="_blank">console.cloudinary.com</a> and sign in with the shared credentials.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>Open Media Library</strong>
+          <p>Click <strong>Media Library</strong> in the left sidebar. You'll see the asset browser where all images are stored.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>Create the folder structure</strong>
+          <p>Click the <strong>+ New Folder</strong> button and create this structure:</p>
+          <code class="code-block">tourism/
+  ├── og/                     <span class="comment">(1 image — social share preview for page.tsx)</span>
+  ├── home/                   <span class="comment">(15 images — hero, destination cards, gallery for HomeClient.tsx)</span>
+  └── places/
+        ├── hampi/
+        ├── marina-beach/
+        ├── valley-of-flowers/
+        ├── spiti-valley/
+        ├── kerala-backwaters/
+        ├── ranthambore/
+        ├── andaman-islands/
+        ├── munnar/
+        ├── ellora-caves/
+        ├── coorg/
+        ├── pondicherry/
+        ├── ziro-valley/
+        ├── taj-mahal/
+        ├── jaisalmer-fort/
+        ├── goa-beaches/
+        ├── varanasi-ghats/
+        ├── golden-temple/
+        ├── mysore-palace/
+        └── leh-ladakh/</code>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <strong>Upload images to each folder</strong>
+          <p>Navigate into the folder for a place (e.g. <code>tourism/places/hampi/</code>), click <strong>Upload</strong> (top right), drag and drop or select the renamed files for that place.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <strong>Verify the upload</strong>
+          <p>Once uploaded, click the image to confirm it looks correct — sharp, correct orientation, right place. The <strong>Public ID</strong> shown in the panel will look like: <code>tourism/places/hampi/hampi-hero</code></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── NAMING CONVENTION ────────────────────────────────────────────── -->
+  <section class="section" id="naming">
+    <div class="section-title">
+      <span class="icon">🏷️</span>
+      File Naming Convention
+    </div>
+
+    <p style="font-size:0.86rem; color:var(--muted); margin-bottom:14px;">
+      Rename files on your computer <em>before</em> uploading. Use lowercase, hyphens only — no spaces, no underscores, no uppercase.
+    </p>
+
+    <div class="two-col">
+      <div class="mini-card">
+        <strong>Format</strong>
+        <code style="display:block; margin-top:6px; word-break:break-all;">{place-id}-hero.jpg</code>
+        <code style="display:block; margin-top:4px; word-break:break-all;">{place-id}-gallery-1.jpg</code>
+        <code style="display:block; margin-top:4px; word-break:break-all;">{place-id}-gallery-2.jpg</code>
+        <code style="display:block; margin-top:4px; word-break:break-all;">{place-id}-gallery-3.jpg</code>
+      </div>
+      <div class="mini-card">
+        <strong>Example — Hampi</strong>
+        <code style="display:block; margin-top:6px; word-break:break-all;">hampi-hero.jpg</code>
+        <code style="display:block; margin-top:4px; word-break:break-all;">hampi-gallery-1.jpg</code>
+        <code style="display:block; margin-top:4px; word-break:break-all;">hampi-gallery-2.jpg</code>
+        <code style="display:block; margin-top:4px; word-break:break-all;">hampi-gallery-3.jpg</code>
+      </div>
+    </div>
+
+    <hr class="divider" style="margin: 18px 0 14px;">
+
+    <p style="font-size:0.82rem; font-weight:700; color:var(--text); margin-bottom:8px;">Place ID reference</p>
+    <p style="font-size:0.76rem; color:var(--muted); margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em;">mock-places.ts (4 images each)</p>
+    <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px;">
+      <code>hampi</code><code>marina-beach</code><code>valley-of-flowers</code><code>spiti-valley</code>
+      <code>kerala-backwaters</code><code>ranthambore</code><code>andaman-islands</code><code>munnar</code>
+      <code>ellora-caves</code><code>coorg</code><code>pondicherry</code><code>ziro-valley</code>
+    </div>
+    <p style="font-size:0.76rem; color:var(--muted); margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em;">mock-queues.ts only (1 image each)</p>
+    <div style="display:flex; flex-wrap:wrap; gap:6px;">
+      <code>taj-mahal</code><code>jaisalmer-fort</code><code>goa-beaches</code>
+      <code>varanasi-ghats</code><code>golden-temple</code><code>mysore-palace</code><code>leh-ladakh</code>
+    </div>
+  </section>
+
+  <!-- ── URL FORMAT ───────────────────────────────────────────────────── -->
+  <section class="section" id="url">
+    <div class="section-title">
+      <span class="icon">🔗</span>
+      How the URLs Work (For Reference)
+    </div>
+
+    <p style="font-size:0.86rem; color:var(--muted); margin-bottom:14px;">
+      You don't need to construct URLs — the developer does this. But this is what a Cloudinary URL looks like once your image is uploaded:
+    </p>
+
+    <code class="code-block"><span class="comment">// Hero image for Hampi</span>
+https://res.cloudinary.com/<span class="hl">duajyized</span>/image/upload/f_auto,q_auto,w_1600/<span class="hl">tourism/places/hampi/hampi-hero</span>.jpg
+
+<span class="comment">// Gallery image</span>
+https://res.cloudinary.com/<span class="hl">duajyized</span>/image/upload/f_auto,q_auto,w_800/<span class="hl">tourism/places/hampi/hampi-gallery-1</span>.jpg</code>
+
+    <div class="callout" style="margin-top: 12px;">
+      <strong>Cloudinary auto-optimises:</strong> <code>f_auto</code> picks the best format (WebP/AVIF),
+      <code>q_auto</code> compresses without visible quality loss, <code>w_1600</code> resizes to the needed width.
+      You just upload the original large file — Cloudinary handles the rest.
+    </div>
+  </section>
+
+  <!-- ── CODE CHANGES ────────────────────────────────────────────────── -->
+  <section class="section" id="code">
+    <div class="section-title">
+      <span class="icon">💻</span>
+      Where the Code Changes Go
+    </div>
+
+    <p style="font-size:0.86rem; color:var(--muted); margin-bottom:18px;">
+      Once images are uploaded to Cloudinary, two files need to be updated in the codebase
+      to swap out the old placeholder URLs.
+    </p>
+
+    <!-- File 1 -->
+    <div style="margin-bottom:24px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+        <code style="font-size:0.82rem; background:var(--code-bg); padding:4px 10px; border-radius:6px; border:1px solid var(--border); color:var(--text);">lib/mock-places.ts</code>
+        <span style="font-size:0.78rem; color:var(--muted);">— place image data</span>
+      </div>
+      <p style="font-size:0.84rem; color:var(--muted); margin-bottom:10px;">
+        This file holds all 12 places. Each place has an <code>imageUrl</code> (hero) and a <code>gallery</code> array (3 images).
+        Replace the Unsplash URLs with Cloudinary URLs for each place.
+      </p>
+      <code class="code-block"><span class="comment">// BEFORE — Unsplash placeholder</span>
+{
+  id: 'hampi',
+  imageUrl: <span class="hl">`https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=900`</span>,
+  gallery: [
+    <span class="hl">`https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800`</span>,
+    <span class="hl">`https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800`</span>,
+    <span class="hl">`https://images.unsplash.com/photo-1447752875215-b2761acf3dfa?w=800`</span>,
+  ],
+}
+
+<span class="comment">// AFTER — Cloudinary (once uploaded)</span>
+{
+  id: 'hampi',
+  imageUrl: <span class="hl">`${CDN}/${Q},w_900/tourism/places/hampi/hampi-hero.jpg`</span>,
+  gallery: [
+    <span class="hl">`${CDN}/${Q},w_800/tourism/places/hampi/hampi-gallery-1.jpg`</span>,
+    <span class="hl">`${CDN}/${Q},w_800/tourism/places/hampi/hampi-gallery-2.jpg`</span>,
+    <span class="hl">`${CDN}/${Q},w_800/tourism/places/hampi/hampi-gallery-3.jpg`</span>,
+  ],
+}</code>
+      <div class="callout" style="margin-top:10px; font-size:0.82rem;">
+        This needs to be done for all 12 places — 48 URL replacements total in this one file.
+      </div>
+    </div>
+
+    <!-- File 2 -->
+    <div style="margin-bottom:24px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+        <code style="font-size:0.82rem; background:var(--code-bg); padding:4px 10px; border-radius:6px; border:1px solid var(--border); color:var(--text);">app/HomeClient.tsx</code>
+        <span style="font-size:0.78rem; color:var(--muted);">— home page destination cards &amp; gallery</span>
+      </div>
+      <p style="font-size:0.84rem; color:var(--muted); margin-bottom:10px;">
+        This file has <strong style="color:var(--text)">16 changes</strong>: the cloud name on line 19 <em>plus</em> 15 individual image paths.
+        Each path contains a version ID (<code>v1781095104</code>) and a public ID (the filename) that are <strong style="color:var(--text)">specific to the old account</strong> — they will be different after uploading to the new account.
+      </p>
+      <code class="code-block"><span class="comment">// Step 1 — Line 19: update cloud name</span>
+const CDN = 'https://res.cloudinary.com/<span class="hl">new-cloud-name</span>/image/upload';
+
+<span class="comment">// Step 2 — Update all 15 image paths (version ID + public ID change)</span>
+<span class="comment">// BEFORE</span>
+const HERO_IMG = `${CDN}/.../<span class="hl">v1781095104/subash-matheswaran-OFpmoFFc63c-unsplash_r1uudy.jpg</span>`;
+
+<span class="comment">// AFTER (new account will have a different version ID and path)</span>
+const HERO_IMG = `${CDN}/.../<span class="hl">v{new-version}/tourism/home/hero.jpg</span>`;</code>
+
+      <p style="font-size:0.82rem; color:var(--muted); margin:10px 0 6px; font-weight:700; color:var(--text);">The 15 images in this file that need new paths:</p>
+      <div class="table-wrap" style="margin-top:6px;">
+        <table>
+          <thead>
+            <tr><th>Line</th><th>Image</th><th>Used in</th></tr>
+          </thead>
+          <tbody>
+            <tr><td style="font-variant-numeric:tabular-nums; font-size:0.78rem; color:var(--muted);">22</td><td><code style="font-size:0.75rem;">subash-matheswaran-..._r1uudy</code></td><td style="font-size:0.8rem; color:var(--muted);">Hero background</td></tr>
+            <tr><td style="font-variant-numeric:tabular-nums; font-size:0.78rem; color:var(--muted);">27</td><td><code style="font-size:0.75rem;">david-samraj-..._rvoigk</code></td><td style="font-size:0.8rem; color:var(--muted);">Destinations card 1</td></tr>
+            <tr><td style="font-variant-numeric:tabular-nums; font-size:0.78rem; color:var(--muted);">36</td><td><code style="font-size:0.75rem;">aravind-thangaraj-..._kk6yow</code></td><td style="font-size:0.8rem; color:var(--muted);">Destinations card 2</td></tr>
+            <tr><td style="font-variant-numeric:tabular-nums; font-size:0.78rem; color:var(--muted);">45</td><td><code style="font-size:0.75rem;">wouter-naert-..._zvvbi1</code></td><td style="font-size:0.8rem; color:var(--muted);">Destinations card 3</td></tr>
+            <tr><td style="font-variant-numeric:tabular-nums; font-size:0.78rem; color:var(--muted);">54</td><td><code style="font-size:0.75rem;">siby-..._kqvkbb</code></td><td style="font-size:0.8rem; color:var(--muted);">Destinations card 4</td></tr>
+            <tr><td style="font-variant-numeric:tabular-nums; font-size:0.78rem; color:var(--muted);">63</td><td><code style="font-size:0.75rem;">subhadeep-dishant-..._z0ul1j</code></td><td style="font-size:0.8rem; color:var(--muted);">Destinations card 5</td></tr>
+            <tr><td style="font-variant-numeric:tabular-nums; font-size:0.78rem; color:var(--muted);">72</td><td><code style="font-size:0.75rem;">subash-matheswaran-..._r1uudy</code></td><td style="font-size:0.8rem; color:var(--muted);">Destinations card 6</td></tr>
+            <tr><td style="font-variant-numeric:tabular-nums; font-size:0.78rem; color:var(--muted);">82–88</td><td><code style="font-size:0.75rem;">7 gallery strip images</code></td><td style="font-size:0.8rem; color:var(--muted);">Scrolling gallery</td></tr>
+            <tr><td style="font-variant-numeric:tabular-nums; font-size:0.78rem; color:var(--muted);">496</td><td><code style="font-size:0.75rem;">siby-..._kqvkbb</code></td><td style="font-size:0.8rem; color:var(--muted);">CTA section background</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout amber" style="margin-top:12px; font-size:0.82rem;">
+        <strong>These home page images also need to be uploaded to the new Cloudinary account.</strong>
+        They are currently not in the places list above — add them to a <code>tourism/home/</code> folder.
+        Use the same scenic India photos already uploaded to <code>duajyized</code>, or choose new ones.
+      </div>
+    </div>
+
+    <!-- File 3 — mock-queues -->
+    <div style="margin-bottom:24px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+        <code style="font-size:0.82rem; background:var(--code-bg); padding:4px 10px; border-radius:6px; border:1px solid var(--border); color:var(--text);">lib/mock-queues.ts</code>
+        <span style="font-size:0.78rem; color:var(--muted);">— queue location images</span>
+      </div>
+      <p style="font-size:0.84rem; color:var(--muted); margin-bottom:10px;">
+        This file has 12 queue locations, each with one <code>imageUrl</code> (hero only, no gallery). Replace the Unsplash URLs the same way.
+      </p>
+      <code class="code-block"><span class="comment">// BEFORE — Unsplash placeholder</span>
+{
+  placeId: 'taj-mahal',
+  imageUrl: <span class="hl">'https://images.unsplash.com/photo-1564507592333-c60657eea523?w=400'</span>,
+}
+
+<span class="comment">// AFTER — Cloudinary</span>
+{
+  placeId: 'taj-mahal',
+  imageUrl: <span class="hl">`${CDN}/${Q},w_400/tourism/places/taj-mahal/taj-mahal-hero.jpg`</span>,
+}</code>
+      <div class="callout amber" style="margin-top:10px; font-size:0.82rem;">
+        <strong>Note:</strong> Add <code>const CDN = 'https://res.cloudinary.com/duajyized/image/upload'</code> and <code>const Q = 'f_auto,q_auto'</code> at the top of this file too — same pattern as mock-places.ts.
+      </div>
+    </div>
+
+    <!-- File 4 — page.tsx -->
+    <div style="margin-bottom:24px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+        <code style="font-size:0.82rem; background:var(--code-bg); padding:4px 10px; border-radius:6px; border:1px solid var(--border); color:var(--text);">app/page.tsx</code>
+        <span style="font-size:0.78rem; color:var(--muted);">— social share / Open Graph image</span>
+      </div>
+      <p style="font-size:0.84rem; color:var(--muted); margin-bottom:10px;">
+        This file has <strong style="color:var(--text)">one hardcoded Cloudinary URL</strong> on line 14 — the <strong style="color:var(--text)">Open Graph image</strong>.
+        This is the preview image shown when someone shares the website link on WhatsApp, Twitter, LinkedIn etc.
+        It must be exactly <strong style="color:var(--text)">1200 × 630 px</strong> — a wide landscape photo of India.
+      </p>
+      <code class="code-block"><span class="comment">// BEFORE — old account URL (line 14)</span>
+url: <span class="hl">'https://res.cloudinary.com/duajyized/image/upload/f_auto,q_auto,w_1200,h_630,c_fill,g_auto/v1781095115/vaisakh-satheesan-US4m1uJSco4-unsplash_jfvgyc.jpg'</span>,
+
+<span class="comment">// AFTER — new account (replace cloud name + public ID)</span>
+url: <span class="hl">'https://res.cloudinary.com/{new-cloud-name}/image/upload/f_auto,q_auto,w_1200,h_630,c_fill,g_auto/tourism/og/og-hero.jpg'</span>,</code>
+      <div class="callout" style="margin-top:10px; font-size:0.82rem;">
+        <strong>For this file:</strong> Upload one wide, scenic India photo to Cloudinary under <code>tourism/og/og-hero.jpg</code>.
+        Best choice: a striking landscape — mountains, beach, or temple — that represents the whole platform.
+      </div>
+    </div>
+
+    <!-- Summary table -->
+    <hr class="divider" style="margin: 4px 0 16px;">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>File</th>
+            <th>What changes</th>
+            <th>How many edits</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>lib/mock-places.ts</code></td>
+            <td style="font-size:0.84rem; color:var(--muted);">Replace <code>imageUrl</code> + <code>gallery</code> URLs for all 12 places</td>
+            <td style="font-size:0.84rem; color:var(--muted); font-variant-numeric:tabular-nums;">48 URLs</td>
+          </tr>
+          <tr>
+            <td><code>lib/mock-queues.ts</code></td>
+            <td style="font-size:0.84rem; color:var(--muted);">Replace <code>imageUrl</code> for all 12 queue locations + add CDN/Q constants</td>
+            <td style="font-size:0.84rem; color:var(--muted); font-variant-numeric:tabular-nums;">12 URLs</td>
+          </tr>
+          <tr>
+            <td><code>app/HomeClient.tsx</code></td>
+            <td style="font-size:0.84rem; color:var(--muted);">Cloud name on line 19 + replace 15 image paths (version IDs + public IDs)</td>
+            <td style="font-size:0.84rem; color:var(--muted); font-variant-numeric:tabular-nums;">16 changes</td>
+          </tr>
+          <tr>
+            <td><code>app/page.tsx</code></td>
+            <td style="font-size:0.84rem; color:var(--muted);">Replace the hardcoded Open Graph image URL on line 14</td>
+            <td style="font-size:0.84rem; color:var(--muted); font-variant-numeric:tabular-nums;">1 URL</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── FINAL CHECKLIST ──────────────────────────────────────────────── -->
+  <section class="section" id="checklist">
+    <div class="section-title">
+      <span class="icon">✅</span>
+      Final Delivery Checklist
+    </div>
+
+    <p style="font-size:0.86rem; color:var(--muted); margin-bottom:14px;">
+      Tick off each item as you go to make sure nothing is missed.
+    </p>
+
+    <div class="checklist">
+      <div class="check-item"><div class="box"></div><span>All 12 places have a hero image uploaded</span></div>
+      <div class="check-item"><div class="box"></div><span>All 12 places have 3 gallery images uploaded</span></div>
+      <div class="check-item"><div class="box"></div><span>All files are in the correct Cloudinary folder (<code>tourism/places/{place-id}/</code>)</span></div>
+      <div class="check-item"><div class="box"></div><span>All file names follow the naming convention (lowercase, hyphens)</span></div>
+      <div class="check-item"><div class="box"></div><span>All hero images are landscape orientation, at least 1600px wide</span></div>
+      <div class="check-item"><div class="box"></div><span>No blurry or low-resolution images included</span></div>
+      <div class="check-item"><div class="box"></div><span>Each image has been verified — sharp, correct place, correct orientation</span></div>
+    </div>
+
+  </section>
+
+</div>
